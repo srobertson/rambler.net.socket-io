@@ -1,0 +1,43 @@
+Provides SocketIO (http://socket.io) support accross multiple channels.
+
+Use:
+Include the following code in your routes.py file to map the the SocketIO handshake
+
+#SocketIO GET /socket.io/1 maps to the SocketIO.handshake
+map.connect('/socket.io/{protocol}', controller="SocketIO", action="handshake")
+map.connect('/socket.io/{protocol}/{action}/{sid}', controller="SocketIO")
+
+>>> class Component(object):
+...   socketio = outlet('SocketioController')
+...   def assembled(self):
+...     self.socketio.on('connection', self.on_connection)
+...     self.socketio.on('disconnect', self.on_disconnect)
+...   def on_connection(self, socket,namespace):
+...      socket.emit('news', {'hello': 'world'})
+...   def on_disconnect(self, socket,namespace):
+...      socket.emit('news', {'hello': 'world'})
+
+
+
+
+
+
+>>> class Component(object):
+...   socketio = outlet('SocketioController')
+...   def assembled(self):
+...     self.socketio.add_delegate(self)
+...
+...   def on_connection(self, socket,namespace):
+...      socket.emit('news', {'hello': 'world'})
+
+
+
+
+var io = require('socket.io').listen(80);
+
+io.sockets.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
