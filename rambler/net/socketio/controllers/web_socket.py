@@ -118,11 +118,9 @@ class WebSocket(component('Operation')):
     pass
 
   def onClose(self, port):
-    print "-- closed", port
     pass
     
   def onError(self, port, err):
-    print "-- error", err
     pass
 
     
